@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Captcha</title>
+</head>
+<body>
+
+<form action="submit_form" method="POST">
+    {{ form.captcha }}
+    <input type="submit" />
+</form>
+
+<script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+    $('.captcha').click(function () {
+
+        $.get("get_new_captcha?newsn=1", function (result) {
+            $('.captcha').attr('src', result);
+            $('#id_captcha_0').attr("value", result.split('/')[3]);
+        });
+
+        return false;
+    });
+</script>
+
+</body>
+</html>

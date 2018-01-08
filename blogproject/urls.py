@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^authenticator/', include('authenticator.urls')),
     url(r'^$', views.index_page),
+    url(r'^imgcode', include('captcha.urls')),
 ]
