@@ -5,11 +5,8 @@
     <title>Captcha</title>
 </head>
 <body>
-
-<form action="submit_form" method="POST">
     {{ form.captcha }}
-    <input type="submit" />
-</form>
+    <span id="submit123">提交按钮</span>
 
 <script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>
@@ -21,6 +18,35 @@
         });
 
         return false;
+    });
+
+    $('#submit123').click(function () {
+        var postData = {
+            'captcha_0': $('#id_captcha_0').val(),
+            'captcha_1': $('#id_captcha_1').val()
+        };
+        $.post("submit_form", postData, function (res) {
+            if(res.code == 200) {
+                    alert("Success")
+                } else {
+                    alert("Failed")
+                }
+        });
+        $.ajax({
+            url: '/authenticator/submit_form',
+            type: 'post',
+            data: postData,
+            success:function (res) {
+                if(res.code == 200) {
+                    alert("Success")
+                } else {
+                    alert("Failed")
+                }
+            },
+            error:function () {
+                alert("error")
+            }
+        });
     });
 </script>
 

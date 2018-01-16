@@ -10,3 +10,21 @@
 {% endfor %}
 </body>
 </html>
+
+
+$.ajax({
+            url: '/authenticator/submit_form',
+            type: 'post',
+            data: postData,
+            success:function (res) {
+                if(res.code == 200) {
+                    alert("Success")
+                } else {
+                    alert("Failed")
+                }
+            },
+            error:function () {
+                alert("error")
+            }
+        });
+

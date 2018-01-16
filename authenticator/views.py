@@ -57,13 +57,23 @@ def get_new_captcha(request):
 
 @csrf_exempt
 def submit_form(request):
-    if request.POST:
-        form = CaptchaTestForm(request.POST)
-        if form.is_valid():
-            human = True
-            print('Successfull')
-        else:
-            print('Failed')
+    # if request.POST:
+    #     form = CaptchaTestForm(request.POST)
+    #     if form.is_valid():
+    #         human = True
+    #         print('Successfull')
+    #     else:
+    #         print('Failed')
+
+    hash_key = request.POST.get('captcha_0', '')
+    result = request.POST.get('captcha_1', '')
+    captcha = CaptchaStore.objects.get(hashkey=hash_key)
+    if captcha.response == result:
+        print('Success')
+        JsonResponse({"code": 200})
+    else:
+        print('Failed')
+        JsonResponse({"code": 400})
 
 
 # class AjaxExampleForm(CreateView):
