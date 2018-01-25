@@ -55,7 +55,6 @@ def get_new_captcha(request):
         return HttpResponse(cimageurl)
 
 
-@csrf_exempt
 def submit_form(request):
     # if request.POST:
     #     form = CaptchaTestForm(request.POST)
