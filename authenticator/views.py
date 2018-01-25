@@ -70,10 +70,10 @@ def submit_form(request):
     captcha = CaptchaStore.objects.get(hashkey=hash_key)
     if captcha.response == result:
         print('Success')
-        JsonResponse({"code": 200})
+        return JsonResponse({"code": 200})
     else:
         print('Failed')
-        JsonResponse({"code": 400})
+        return JsonResponse({"code": 400})
 
 
 # class AjaxExampleForm(CreateView):
