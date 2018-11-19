@@ -25,7 +25,7 @@ SECRET_KEY = '!kc_a6tlz#qzx***_*z=)2rg(*^1idqbaoa#9!z1v6b-y3^e@y'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'chenshuaiyk.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'chenshuaiyk.com', '176.122.179.242']
 
 
 # Application definition
@@ -76,10 +76,26 @@ WSGI_APPLICATION = 'blogproject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': "my_vps",
+        'TEST_NAME': "my_vps",
+        'ENGINE': 'django.db.backends.mysql',
+        'USER': "chenshuai",
+        'PASSWORD': "555666a",
+        'HOST': "176.122.179.242",
+        'PORT': "3306",
+        'CONN_MAX_AGE': 500,
+        'OPTIONS': {
+            'autocommit': True,
+        },
     }
 }
 
