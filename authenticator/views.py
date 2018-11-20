@@ -45,7 +45,8 @@ def validation_captcha(request):
             human = True
     else:
         form = CaptchaTestForm()
-    return render_to_response('captcha.html', locals())
+    # return render_to_response('captcha.html', locals())
+    return render(request, 'captcha.html', {"form": form})
 
 
 def get_new_captcha(request):
