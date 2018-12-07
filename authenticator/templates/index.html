@@ -1,13 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Blog</title>
-</head>
-<body>
-<h1>Blog for YK</h1>
-<div>
-    <a href="{% url 'authenticator:captcha' %}">获取图片验证码</a>
-</div>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>主页</title>
+{% endblock %}
+
+{% block main %}
+    <h1 class="common-margin" style="alignment: center">Blog for YK</h1>
+{% endblock %}
+
+{% block script %}
+    <script>
+        $(function () {
+            $('#nav_home').addClass('layui-this')
+        });
+    </script>
+{% endblock %}
+
+
+
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Blog</title>#}
+{#</head>#}
+{#<body>#}
+{#<h1>Blog for YK</h1>#}
+{#<div>#}
+{#    <a href="{% url 'authenticator:captcha' %}">获取图片验证码</a>#}
+{#</div>#}
+{#</body>#}
+{#</html>#}

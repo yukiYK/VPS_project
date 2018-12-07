@@ -1,12 +1,72 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Blog for YK</title>
-</head>
-<body>
-{% for index in list %}
-    {{ index }}
-{% endfor %}
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>谷歌验证码</title>
+{% endblock %}
+
+{% block main %}
+    <div class="common-margin">
+        <label for="secret_key">请输入密钥：</label>
+        <input type="text" id="secret_key" name="secret_key"/>
+        <button id="submit_btn" onclick="submit()">查看验证码</button>
+
+    <div id="code_div">
+
+    </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        $(function () {
+            $('#nav_authenticator').addClass('layui-this')
+        });
+
+        $.ajaxSetup({
+            data: {
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+        });
+        function submit() {
+            let secret_key = $("#secret_key").val();
+            if(secret_key.length <= 0) {
+                layer.msg("密钥不能为空");
+            } else {
+                $.ajax({
+                    url: 'google',
+                    type: 'post',
+                    data: {"secret_key": secret_key},
+                    success: function (res) {
+                        if (res.code == 200) {
+                            var code_str = "";
+                            console.log(res.data);
+                            for(let index in res.data) {
+                                code_str = code_str + res.data[index] + "\n"
+                            }
+                            $("#code_div").text(code_str)
+                        } else {
+                            layer.msg("获取失败，请稍后再试");
+                        }
+                    },
+                    error: function () {
+                        layer.msg("网络错误，请稍后再试");
+                    }
+                });
+            }
+        }
+    </script>
+{% endblock %}
+
+
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Blog for YK</title>#}
+{#</head>#}
+{#<body>#}
+{#{% for index in list %}#}
+{#    {{ index }}#}
+{#{% endfor %}#}
+{#</body>#}
+{#</html>#}

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from common.response import render
 
 
 def index_page(request):
