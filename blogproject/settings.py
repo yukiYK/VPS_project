@@ -23,8 +23,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '!kc_a6tlz#qzx***_*z=)2rg(*^1idqbaoa#9!z1v6b-y3^e@y'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = False
-DEBUG = True
+DEBUG = False
+# DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'chenshuaiyk.com', '176.122.179.242']
 
@@ -146,17 +146,17 @@ USE_TZ = True
 LOGIN_URL = "/login"
 
 STATIC_URL = '/static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
 # redis 配置
 if DEBUG:
     REDIS_HOST = "localhost"
     REDIS_PORT = "6379"
     REDIS_PASSWORD = ""
+    STATICFILES_DIRS = (
+        os.path.join(BASE_DIR, 'static'),
+    )
 else:
-    REDIS_HOST = ""
-    REDIS_PORT = ""
+    REDIS_HOST = "localhost"
+    REDIS_PORT = "6379"
     REDIS_PASSWORD = ""
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
