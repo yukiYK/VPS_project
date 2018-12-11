@@ -1,0 +1,130 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base id="base" href="${base}">
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'user/css/normalize.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'user/css/demo.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'user/css/component.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'layui/css/layui.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'authenticator/css/common.css' %}"/>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="{% static 'layui/layui.js' %}"></script>
+    <script type="text/javascript">
+        function loadTopWindow() {
+            if (window.top != null && window.top.document.URL != document.URL) {
+                window.top.location = document.URL;
+            }
+        }
+    </script>
+</head>
+<body onload="loadTopWindow()">
+<div class="container demo-1">
+    <div class="content">
+        <div id="large-header" class="large-header">
+            <div class="logo_box">
+                <div class="logo"><img id="logo-img" src="{% static 'user/images/login_home.jpg' %}" alt=""></div>
+                <!--<h3>CMS欢迎你</h3>-->
+                <form action="#" name="f" method="post">
+                    <div class="input_outer">
+                        <span class="u_user"></span>
+                        <input name="phone" class="text" style="color: #FFFFFF !important" type="text" placeholder="请输入手机号">
+                    </div>
+                    <div class="input_outer">
+                        <span class="us_uer"></span>
+                        <input name="password" class="text" style="color: #FFFFFF !important; position:absolute; z-index:100;"value="" type="password" placeholder="请输入密码">
+                    </div>
+                    <div class="mb2"><a id = "sub" lay-filter="sub" class="act-but submit" href="javascript:;" style="color: #FFFFFF">登录</a></div>
+                </form>
+                <div>
+                    <a href="{% url 'register_page' %}" style="text-align: center; display: block; color: white; font-size: 14px">还没有账号？去注册</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="{% static 'user/js/TweenLite.min.js' %}"></script>
+<script src="{% static 'user/js/EasePack.min.js' %}"></script>
+<script src="{% static 'user/js/rAF.js' %}"></script>
+<script src="{% static 'user/js/demo-1.js' %}"></script>
+<script>
+    //加载弹出层组件
+    layui.use(['layer', 'jquery'],function(){
+        let layer = layui.layer;
+        let $ = layui.jquery;
+        let loading = null;
+        var link = '/';
+        $.ajaxSetup({
+            data: {
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+        });
+
+        function getUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]);
+            return null;
+        }
+
+        var next = getUrlParam('next');
+        if (next != null) {
+            link = next;
+        }
+
+        //登录的点击事件
+        $("#sub").on("click",function(){
+            login();
+        });
+
+        $("body").keydown(function(){
+            if(event.keyCode == "13"){
+                login();
+            }
+        });
+
+        //登录函数
+        function login(){
+            let phone = $(" input[ name='phone' ] ").val();
+            let password = $(" input[ name='password' ] ").val();
+            if(!phone){
+                layer.msg("用户名不能为空");
+                return
+            }
+            if(!password){
+                layer.msg("密码不能为空");
+                return
+            }
+            loading = layer.load(1, {
+                shade: [0.1, '#fff']
+            });
+            $.ajax({
+                url:"/user/api/sign_in",
+                data:{
+                    "phone":phone,
+                    "password":password,
+                    "next_url": ""
+                },
+                type:"post",
+                dataType:"json",
+                success:function(res){
+                    layer.close(loading);
+                    if(res.code == 200){
+                        window.location = link;
+                    }else{
+                        layer.msg(res.msg, {icon: 2});
+                    }
+                },
+                error: function () {
+                    layer.close(loading);
+                    layer.msg("网络错误，请稍后再试", {icon: 0})
+                }
+            })
+        }
+    })
+
+</script>
+</html>

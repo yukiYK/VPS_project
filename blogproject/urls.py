@@ -17,10 +17,14 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.conf.urls import include
 from . import views
+from user import views as user_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^authenticator/', include('authenticator.urls')),
     url(r'^$', views.index_page),
     url(r'^imgcode', include('captcha.urls')),
+    url(r'^user/', include('user.urls')),
+    url(r'^login$', user_views.login_page, name="login_page"),
+    url(r'^register$', user_views.register_page, name="register_page"),
 ]

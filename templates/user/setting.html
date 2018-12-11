@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>设置</title>
+{% endblock %}
+
+{% block main %}
+    <div class="common-margin">
+        <h2>这里是设置页面</h2>
+    <div id="code_div">
+
+    </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        $(function () {
+            $('#nav_user').addClass('layui-this')
+        });
+        $.ajaxSetup({
+            data: {
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+        });
+    </script>
+{% endblock %}

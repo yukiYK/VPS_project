@@ -1,23 +1,34 @@
-from common.response import render
-from django.shortcuts import render_to_response
-from django.http import HttpResponse
+import json
 import time
+from common.response import render
+from django.http import HttpResponse
 from django.http import JsonResponse
 import onetimepass as otp
 from .forms import CaptchaTestForm
-from django.views.generic.edit import CreateView
 from captcha.models import CaptchaStore
 from captcha.helpers import captcha_image_url
-import json
-from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
+# ------------------------------------pages----------------------------------
+@login_required
 def authenticator_page(request):
-    return render(request, 'authenticator.html')
+    return render(request, 'authenticator/authenticator.html')
 
 
-# @csrf_exempt
+def captcha_page(request):
+    if request.POST:
+        form = CaptchaTestForm(request.POST)
+        if form.is_valid():
+            human = True
+    else:
+        form = CaptchaTestForm()
+    # return render_to_response('captcha.html', locals())
+    return render(request, 'authenticator/captcha.html', {"form": form})
+
+
+# ---------------------------------------------------------------------------
 def google(request):
     if "secret_key" not in request.POST:
         return JsonResponse({"code": 400, "message": "secret_key lack"})
@@ -40,17 +51,6 @@ def fix_value(value):
     while len(value_str) < 6:
         value_str = '0' + value_str
     return value_str
-
-
-def validation_captcha(request):
-    if request.POST:
-        form = CaptchaTestForm(request.POST)
-        if form.is_valid():
-            human = True
-    else:
-        form = CaptchaTestForm()
-    # return render_to_response('captcha.html', locals())
-    return render(request, 'captcha.html', {"form": form})
 
 
 def get_new_captcha(request):

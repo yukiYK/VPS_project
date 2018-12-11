@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>用户中心</title>
+{% endblock %}
+
+{% block main %}
+    <div class="common-margin">
+        <h2>{{ phone }}</h2>
+        <a class="layui-btn" href="{% url 'user:sign_out' %}">退出登录</a>
+
+    <div id="code_div">
+
+    </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        $(function () {
+            $('#nav_user').addClass('layui-this')
+        });
+
+        $.ajaxSetup({
+            data: {
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+        });
+    </script>
+{% endblock %}
+
+
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Blog for YK</title>#}
+{#</head>#}
+{#<body>#}
+{#{% for index in list %}#}
+{#    {{ index }}#}
+{#{% endfor %}#}
+{#</body>#}
+{#</html>#}

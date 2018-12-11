@@ -8,3 +8,6 @@ class Authenticator(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     note = models.CharField(max_length=100)
+
+    class Meta:
+        db_table = 'authenticator'
