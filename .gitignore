@@ -63,7 +63,7 @@ log
 *.log
 public/*
 test.py
-/static/*
+# /static/*
 /media/*
 log/*
 .idea/*
