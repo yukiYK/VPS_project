@@ -26,7 +26,7 @@ SECRET_KEY = '!kc_a6tlz#qzx***_*z=)2rg(*^1idqbaoa#9!z1v6b-y3^e@y'
 DEBUG = False
 # DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'chenshuaiyk.com', '176.122.179.242']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'www.chenshuaiyk.com', '176.122.179.242']
 
 
 # Application definition
